@@ -7,5 +7,15 @@
         Pizzas
     </h1>
 
+    <ul th:if="${pizzas.size() != 0}">
+        <li th:each="pizza : ${pizzas}">
+            [[${pizza.name}]]
+        </li>
+    </ul>
+
+    <h2 th:if="${pizzas.size() == 0 || pizzas == null}">
+        Nessuna pizza da mostrare
+    </h2>
+
 </body>
 </html>

@@ -46,9 +46,7 @@ public class Pizza {
         this.description = description;
     }
 
-    public String getImg() {
-        return img;
-    }
+    public String getImg() { return img; }
 
     public void setImg(String img) {
         this.img = img;
