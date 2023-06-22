@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/head :: head('')}"></head>
+
+<body class="d-flex" style="height: 100vh;">
+
+    <aside th:replace="~{/fragments/body :: aside('home')}"></aside>
+
+    <main class="container p-5 h-100">
+        <div class="row my-5">
+            <div class="col text-center my-5">
+                <img th:src="@{/img/logo.png}" width="150">
+                <h1 class="display-3 fw-bolder text-primary">
+                    Welcome to PizzaDB!
+                </h1>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>

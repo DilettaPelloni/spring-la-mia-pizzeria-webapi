@@ -1,21 +1,29 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{/fragments/header :: header('Pizzas')}"></head>
-<body>
 
-    <h1>
-        Pizzas
-    </h1>
+<head th:replace="~{/fragments/head :: head(' - Pizzas')}"></head>
 
-    <ul th:if="${pizzas.size() != 0}">
-        <li th:each="pizza : ${pizzas}">
-            [[${pizza.name}]]
-        </li>
-    </ul>
+<body class="d-flex" style="height: 100vh;">
 
-    <h2 th:if="${pizzas.size() == 0 || pizzas == null}">
-        Nessuna pizza da mostrare
-    </h2>
+    <aside th:replace="~{/fragments/body :: aside('pizzas')}"></aside>
+
+    <main class="container p-5 h-100">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="fw-bolder">Pizzas</h1>
+            </div>
+        </div>
+
+        <ul th:if="${pizzas.size() != 0}">
+            <li th:each="pizza : ${pizzas}">
+                [[${pizza.name}]]
+            </li>
+        </ul>
+
+        <h2 th:if="${pizzas.size() == 0 || pizzas == null}">
+            Nessuna pizza da mostrare
+        </h2>
+    </main>
 
 </body>
 </html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!--MENU LATERALE DELLE PAGINE-->
+    <aside th:fragment="aside(page)" class="bg-primary-subtle h-100 p-5">
+        <!--LOGO-->
+        <a class="d-flex align-items-center text-decoration-none" th:href="@{/}">
+            <img th:src="@{/img/logo.png}" width="60" alt="Logo" class="d-inline-block align-text-top">
+            <span class="ms-2 fw-bolder fs-3 text-primary">PizzaDB</span>
+        </a>
+        <!--TITOLO-->
+        <h4 class="mt-5 text-body-tertiary fs-5">Dashboard</h4>
+        <!--NAVIGAZIONE-->
+        <nav class="mt-5">
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                    <a
+                        th:href="@{/pizzas}"
+                        class="nav-link text-decoration-none fw-medium"
+                        th:classappend="${page == 'pizzas' ? 'active' : ''}"
+                    >
+                        Pizzas
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/}" class="nav-link text-decoration-none fw-medium">
+                        ---------
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/}" class="nav-link text-decoration-none fw-medium">
+                        ---------
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/}" class="nav-link text-decoration-none fw-medium">
+                        ---------
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/}" class="nav-link text-decoration-none fw-medium">
+                        ---------
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+
+</body>
+</html>
