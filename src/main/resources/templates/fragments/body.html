@@ -10,45 +10,62 @@
 <body>
 
     <!--NAVBAR-->
-    <header th:fragment="header" class="navbar sticky-top flex-md-nowrap p-2 bg-primary-subtle shadow-sm" style="min-height: 10vh">
+    <header th:fragment="header" class="navbar navbar-dark bg-primary sticky-top flex-md-nowrap px-4 py-2 shadow-sm" style="min-height: 10vh">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 d-flex align-items-center text-decoration-none" th:href="@{/}">
             <img th:src="@{/img/logo.png}" width="60" alt="Logo" class="d-inline-block align-text-top">
-            <span class="ms-2 fw-bolder fs-3 text-primary">PizzaDB</span>
+            <span class="ms-2 fw-bolder fs-3">PizzaDB</span>
         </a>
         <div class="w-100"></div>
     </header>
 
     <!--MENU LATERALE DELLE PAGINE-->
-    <nav th:fragment="aside(page)" class="col-md-3 col-lg-2 d-md-block sidebar collapse bg-primary-subtle shadow-sm">
+    <nav th:fragment="aside(page)" class="col-md-3 col-lg-2 d-md-block sidebar collapse bg-dark navbar-dark shadow-sm">
         <div class="position-sticky pt-3">
-            <h6 class="sidebar-heading px-3 my-4 text-muted">Dashboard</h6>
-            <ul class="nav nav-pills flex-column">
+            <h6 class="my-4 text-light lead">Dashboard</h6>
+            <ul class="nav nav-pills flex-column fw-medium text-decoration-none">
                 <li class="nav-item">
                     <a
-                            th:href="@{/pizzas}"
-                            class="nav-link text-decoration-none fw-medium"
-                            th:classappend="${page == 'pizzas' ? 'active' : ''}"
+                        th:href="@{/pizzas}"
+                        class="nav-link"
+                        th:classappend="${page == 'pizzas' ? 'active' : ''}"
                     >
+                        <i class="fa-solid fa-pizza-slice me-2"></i>
                         Pizzas
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/}" class="nav-link text-decoration-none ">
+                    <a
+                            th:href="@{/pizzas}"
+                            class="nav-link"
+                            th:classappend="${page == '--' ? 'active' : ''}"
+                    >
                         ---------
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/}" class="nav-link text-decoration-none ">
+                    <a
+                            th:href="@{/pizzas}"
+                            class="nav-link"
+                            th:classappend="${page == '--' ? 'active' : ''}"
+                    >
                         ---------
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/}" class="nav-link text-decoration-none ">
+                    <a
+                            th:href="@{/pizzas}"
+                            class="nav-link"
+                            th:classappend="${page == '--' ? 'active' : ''}"
+                    >
                         ---------
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/}" class="nav-link text-decoration-none ">
+                    <a
+                            th:href="@{/pizzas}"
+                            class="nav-link"
+                            th:classappend="${page == '--' ? 'active' : ''}"
+                    >
                         ---------
                     </a>
                 </li>
@@ -57,11 +74,12 @@
     </nav>
 
     <!--TITOLO PAGINA-->
-    <div th:fragment="pageTitle(title)" class="row ">
+    <div th:fragment="pageTitle(title)" class="row mb-3">
         <div class="col-12">
-            <h1 >
+            <h1 class="fw-bold text-primary">
                 [[${title}]]
             </h1>
+            <hr>
         </div>
     </div>
 
