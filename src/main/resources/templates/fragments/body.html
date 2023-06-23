@@ -8,50 +8,62 @@
     <title>Document</title>
 </head>
 <body>
-    <!--MENU LATERALE DELLE PAGINE-->
-    <aside th:fragment="aside(page)" class="bg-primary-subtle h-100 p-5">
-        <!--LOGO-->
-        <a class="d-flex align-items-center text-decoration-none" th:href="@{/}">
+
+    <!--NAVBAR-->
+    <header th:fragment="header" class="navbar sticky-top flex-md-nowrap p-2 bg-primary-subtle shadow-sm">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 d-flex align-items-center text-decoration-none" th:href="@{/}">
             <img th:src="@{/img/logo.png}" width="60" alt="Logo" class="d-inline-block align-text-top">
             <span class="ms-2 fw-bolder fs-3 text-primary">PizzaDB</span>
         </a>
-        <!--TITOLO-->
-        <h4 class="mt-5 text-body-tertiary fs-5">Dashboard</h4>
-        <!--NAVIGAZIONE-->
-        <nav class="mt-5">
+        <div class="w-100"></div>
+    </header>
+
+    <!--MENU LATERALE DELLE PAGINE-->
+    <nav th:fragment="aside(page)" class="col-md-3 col-lg-2 d-md-block sidebar collapse bg-primary-subtle shadow-sm">
+        <div class="position-sticky pt-3">
+            <h6 class="sidebar-heading px-3 my-4 text-muted">Dashboard</h6>
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item">
                     <a
-                        th:href="@{/pizzas}"
-                        class="nav-link text-decoration-none fw-medium"
-                        th:classappend="${page == 'pizzas' ? 'active' : ''}"
+                            th:href="@{/pizzas}"
+                            class="nav-link text-decoration-none fw-medium"
+                            th:classappend="${page == 'pizzas' ? 'active' : ''}"
                     >
                         Pizzas
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/}" class="nav-link text-decoration-none fw-medium">
+                    <a th:href="@{/}" class="nav-link text-decoration-none ">
                         ---------
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/}" class="nav-link text-decoration-none fw-medium">
+                    <a th:href="@{/}" class="nav-link text-decoration-none ">
                         ---------
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/}" class="nav-link text-decoration-none fw-medium">
+                    <a th:href="@{/}" class="nav-link text-decoration-none ">
                         ---------
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/}" class="nav-link text-decoration-none fw-medium">
+                    <a th:href="@{/}" class="nav-link text-decoration-none ">
                         ---------
                     </a>
                 </li>
             </ul>
-        </nav>
-    </aside>
+        </div>
+    </nav>
+
+    <!--TITOLO PAGINA-->
+    <div th:fragment="pageTitle(title)" class="row ">
+        <div class="col-12">
+            <h1 >
+                [[${title}]]
+            </h1>
+        </div>
+    </div>
 
 
 </body>
