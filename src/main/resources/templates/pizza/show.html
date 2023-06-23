@@ -10,8 +10,40 @@
         <div class="row" style="min-height: 90vh">
             <nav th:replace="~{fragments/body :: aside('pizzas')}"></nav>
 
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-4">
-                <div th:replace="~{fragments/body :: pageTitle(${pizza.name})}"></div>
+            <main class="col-md-9 ms-sm-auto col-lg-10 p-5" th:object="${pizza}">
+                <div th:replace="~{fragments/body :: pageTitle(*{name})}"></div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <img th:src="*{img}" th:alt="*{name}" class="img-fluid">
+                    </div>
+                    <div class="col-8 px-4">
+                        <div class="list-group">
+                            <div class="list-group-item d-flex align-items-center gap-3">
+                                <i class="fa-solid fa-quote-left text-primary"></i>
+                                <div class="w-100">
+                                    <h6 class="mb-0">
+                                        Description
+                                    </h6>
+                                    <p class="mb-0 opacity-75">
+                                        [[*{description}]]
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="list-group-item d-flex align-items-center gap-3">
+                                <i class="fa-solid fa-coins text-primary"></i>
+                                <div class="w-100">
+                                    <h6 class="mb-0">
+                                        Price
+                                    </h6>
+                                    <p class="mb-0 opacity-75">
+                                        [[*{#numbers.formatCurrency(price)}]]
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
