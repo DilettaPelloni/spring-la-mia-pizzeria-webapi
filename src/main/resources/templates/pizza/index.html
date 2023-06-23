@@ -28,7 +28,7 @@
                             <td th:text="${pizza.description}"></td>
                             <td th:text="${pizza.price}"></td>
                             <td>
-                                <a th:href="@{#}" class="btn btn-primary">
+                                <a th:href="@{|/pizzas/${pizza.id}|}" class="btn btn-primary">
                                     <i class="fa-solid fa-pizza-slice"></i>
                                 </a>
                             </td>
