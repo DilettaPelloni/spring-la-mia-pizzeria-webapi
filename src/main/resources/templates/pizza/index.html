@@ -13,6 +13,23 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-4">
                 <div th:replace="~{fragments/body :: pageTitle('Pizzas')}"></div>
 
+                <hr>
+
+                <form th:action="@{/pizzas}" method="GET">
+                    <div class="input-group">
+                        <input
+                            type="search"
+                            name="keyword"
+                            class="form-control"
+                            placeholder="Search by name"
+                            th:value="${keyword}"
+                        >
+                        <button class="btn btn-primary" type="submit" id="button-addon2">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </form>
+
                 <table th:if="${pizzas.size() > 0}" class="table">
                     <thead>
                         <tr>

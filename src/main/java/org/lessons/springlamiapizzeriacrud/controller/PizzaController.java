@@ -32,6 +32,7 @@ public class PizzaController {
             pizzas = pizzaRepository.findAll(); //restituirò l'intera lista di pizze
         } else { //se mi è stata data la keyword da ricercare
             pizzas = pizzaRepository.findByNameContainingIgnoreCase(keyword); //la passo al metodo che la utilizzerà per fare la QUERY
+            model.addAttribute("keyword", keyword); //passo la keyword, in modo da poterla mostrare in pagina
         }
         model.addAttribute("pizzas", pizzas); //passo la lista al model
         return "pizza/index"; //ritorno la view
