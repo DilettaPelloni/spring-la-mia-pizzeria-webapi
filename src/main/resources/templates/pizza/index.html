@@ -6,21 +6,38 @@
 <body>
     <header th:replace="~{fragments/body :: header}"></header>
 
-    <div class="container-fluid vh-100">
-        <div class="row h-100">
+    <div class="container-fluid">
+        <div class="row" style="min-height: 90vh">
             <nav th:replace="~{fragments/body :: aside('pizzas')}"></nav>
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-4">
                 <div th:replace="~{fragments/body :: pageTitle('Pizzas')}"></div>
 
-                <ul th:if="${pizzas.size() != 0}">
-                    <li th:each="pizza : ${pizzas}">
-                        [[${pizza.name}]]
-                    </li>
-                </ul>
+                <table th:if="${pizzas.size() > 0}" class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="pizza : ${pizzas}">
+                            <td th:text="${pizza.name}"></td>
+                            <td th:text="${pizza.description}"></td>
+                            <td th:text="${pizza.price}"></td>
+                            <td>
+                                <a th:href="@{#}" class="btn btn-primary">
+                                    <i class="fa-solid fa-pizza-slice"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                <h2 th:if="${pizzas.size() == 0 || pizzas == null}">
-                    Nessuna pizza da mostrare
+                <h2 th:unless="${pizzas.size() > 0}">
+                    No items to show
                 </h2>
             </main>
         </div>
