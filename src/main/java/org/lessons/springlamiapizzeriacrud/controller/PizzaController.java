@@ -80,7 +80,7 @@ public class PizzaController {
             return "/pizza/create";
         }
         pizzaRepository.save(formPizza);
-        return "redirect:/pizzas";
+        return "redirect:/pizzas/" + formPizza.getId();
     }
 
     //UTILITIES ----------------------------------------------------------------------------------------
