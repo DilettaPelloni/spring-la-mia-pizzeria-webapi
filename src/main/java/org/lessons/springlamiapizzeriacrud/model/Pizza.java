@@ -29,6 +29,7 @@ public class Pizza {
     private String img;
 
     @PositiveOrZero(message = "Price must have a positive value")
+    @NotNull(message = "Price must not be null")
     private BigDecimal price;
 
 
