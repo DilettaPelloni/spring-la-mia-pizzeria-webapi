@@ -28,7 +28,15 @@
                         type="text"
                         th:field="*{name}"
                         class="form-control"
+                        th:errorClass="is-invalid"
                     >
+                    <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('name')}">
+                                [[${err}]]
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="col-6 mt-2">
                     <label for="price" class="form-label">
@@ -40,7 +48,15 @@
                         step="0.1"
                         th:field="*{price}"
                         class="form-control"
+                        th:errorClass="is-invalid"
                     >
+                    <div th:if="${#fields.hasErrors('price')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('price')}">
+                                [[${err}]]
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="col-12 mt-2">
                     <label for="img" class="form-label">
@@ -51,7 +67,15 @@
                         type="text"
                         th:field="*{img}"
                         class="form-control"
+                        th:errorClass="is-invalid"
                     >
+                    <div th:if="${#fields.hasErrors('img')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('img')}">
+                                [[${err}]]
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="col-12 mt-2">
                     <label for="description" class="form-label">
@@ -61,8 +85,16 @@
                         id="description"
                         th:field="*{description}"
                         class="form-control"
+                        th:errorClass="is-invalid"
                         rows="5"
                     ></textarea>
+                    <div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('description')}">
+                                [[${err}]]
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="col-12 mt-4">
                     <button type="submit" class="btn btn-success">
