@@ -22,7 +22,7 @@ public class Pizza {
 
     @Column(columnDefinition="TEXT") //ho cambiato il tipo di colonna in modo che fosse una text, per ospitare più di 255 caratteri
     @NotBlank(message = "Description must not be null or blank")
-    @Size(min=3, max=255, message = "Description must have min 3 and max 1600 characters")
+    @Size(min=3, max=1600, message = "Description must have min 3 and max 1600 characters")
     private String description;
 
     @NotBlank(message = "Image must not be null or blank")
