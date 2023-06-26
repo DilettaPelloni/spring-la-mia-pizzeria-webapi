@@ -7,14 +7,78 @@
 <header th:replace="~{fragments/body :: header}"></header>
 
 <div class="container-fluid">
-  <div class="row" style="min-height: 90vh">
-    <nav th:replace="~{fragments/body :: aside('pizzas')}"></nav>
+    <div class="row" style="min-height: 90vh">
+        <nav th:replace="~{fragments/body :: aside('pizzas')}"></nav>
 
-    <main class="col-md-9 ms-sm-auto col-lg-10 p-5">
-      <div th:replace="~{fragments/body :: pageTitle('New pizza')}"></div>
-    </main>
+        <main class="col-md-9 ms-sm-auto col-lg-10 p-5">
+            <div th:replace="~{fragments/body :: pageTitle('New pizza')}"></div>
+            <form
+                id="pizza-form"
+                th:action="@{pizzas/create}"
+                method="POST"
+                th:object="${pizza}"
+                class="row"
+            >
+                <div class="col-6 mt-2">
+                    <label for="name" class="form-label">
+                        Name
+                    </label>
+                    <input
+                        id="name"
+                        type="text"
+                        th:field="*{name}"
+                        class="form-control"
+                    >
+                </div>
+                <div class="col-6 mt-2">
+                    <label for="price" class="form-label">
+                        Price
+                    </label>
+                    <input
+                        id="price"
+                        type="number"
+                        step="0.1"
+                        th:field="*{price}"
+                        class="form-control"
+                    >
+                </div>
+                <div class="col-12 mt-2">
+                    <label for="img" class="form-label">
+                        Image
+                    </label>
+                    <input
+                        id="img"
+                        type="text"
+                        th:field="*{img}"
+                        class="form-control"
+                    >
+                </div>
+                <div class="col-12 mt-2">
+                    <label for="description" class="form-label">
+                        Description
+                    </label>
+                    <textarea
+                        id="description"
+                        th:field="*{description}"
+                        class="form-control"
+                        rows="5"
+                    ></textarea>
+                </div>
+                <div class="col-12 mt-4">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                    <button type="reset" class="btn btn-warning text-white">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                    <a th:href="@{/pizzas}" class="btn btn-primary">
+                        Back
+                    </a>
+                </div>
+            </form>
+        </main>
 
-  </div>
+    </div>
 </div>
 
 </body>
