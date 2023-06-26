@@ -53,7 +53,7 @@
                     <tbody class="table-group-divider border-secondary-subtle">
                         <tr th:each="pizza : ${pizzas}" class="align-middle">
                             <td th:text="${pizza.name}"></td>
-                            <td th:text="${pizza.description}"></td>
+                            <td th:text="${pizza.description}" class="text-break"></td>
                             <td th:text="${#numbers.formatCurrency(pizza.price)}"></td>
                             <td><img th:src="${pizza.img}" height="30" th:alt="${pizza.name}"></td>
                             <td>
