@@ -21,6 +21,7 @@ public class PizzaController {
     @Autowired
     private PizzaRepository pizzaRepository;
 
+    //READ --------------------------------------------------------------------------------------------------------------
     @GetMapping
     public String index(
         Model model,
@@ -42,18 +43,12 @@ public class PizzaController {
         Model model,
         @PathVariable("id") Integer id
     ) {
-        Optional<Pizza> pizza = pizzaRepository.findById(id); //cerco la pizza in base all'id
-        if(pizza.isPresent()) { //se ho trovato qualcosa
-            model.addAttribute("pizza", pizza.get()); //do la pizza alla view
-        } else { //altrimenti lancio un eccezione che restituirà un errore 404
-            throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND, //tipo di errore
-                "Pizza with id " + id + " not found" //messaggio
-            );
-        }
+        Pizza pizza = getPizzaById(id); //uso un metodo che cerca la pizza per id e me la restituisce, se non la trova lancia un'eccezione
+        model.addAttribute("pizza", pizza); //se ho trovato qualcosa do la pizza alla view
         return "/pizza/show";
     }
 
+    //CREATE --------------------------------------------------------------------------------------------------------------
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("pizza", new Pizza());
@@ -83,10 +78,32 @@ public class PizzaController {
         return "redirect:/pizzas/" + formPizza.getId();
     }
 
+    //UPDATE --------------------------------------------------------------------------------------------------------------
+    @GetMapping("/edit/{id}")
+    private String edit(
+            @PathVariable("id") Integer id,
+            Model model
+    ) {
+        Pizza pizza = getPizzaById(id);
+        model.addAttribute(pizza);
+        return "/pizza/editor";
+    }
+
     //UTILITIES ----------------------------------------------------------------------------------------
     private boolean isNameUnique(String name){
         Optional<Pizza> result = pizzaRepository.findByName(name);
         return result.isEmpty();
     }
+    private Pizza getPizzaById(Integer id) {
+        Optional<Pizza> pizza = pizzaRepository.findById(id); //cerco la pizza in base all'id
+        if(pizza.isEmpty()) { // se non la trovo lancio un'eccezione che restituirà un errore 404
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, //tipo di errore
+                    "Pizza with id " + id + " not found" //messaggio
+            );
+        }
+        return pizza.get(); //se la trovo, restituisco la pizza
+    }
+
 
 }
