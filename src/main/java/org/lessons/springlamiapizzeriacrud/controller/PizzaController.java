@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -119,10 +121,12 @@ public class PizzaController {
     //DELETE --------------------------------------------------------------------------------------------------------------
     @PostMapping("/delete/{id}")
     public String delete(
-        @PathVariable("id") Integer id
+        @PathVariable("id") Integer id,
+        RedirectAttributes redirectAttributes
     ) {
         Pizza pizza = getPizzaById(id);
         pizzaRepository.delete(pizza);
+        redirectAttributes.addFlashAttribute("message", "Pizza " + pizza.getName() + " deleted successfully!");
         return "redirect:/pizzas";
     }
 
