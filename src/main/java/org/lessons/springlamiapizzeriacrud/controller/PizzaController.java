@@ -80,13 +80,40 @@ public class PizzaController {
 
     //UPDATE --------------------------------------------------------------------------------------------------------------
     @GetMapping("/edit/{id}")
-    private String edit(
-            @PathVariable("id") Integer id,
-            Model model
+    public String edit(
+        @PathVariable("id") Integer id,
+        Model model
     ) {
         Pizza pizza = getPizzaById(id);
         model.addAttribute(pizza);
         return "/pizza/editor";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String update(
+        @PathVariable("id") Integer id,
+        @Valid @ModelAttribute("pizza") Pizza formPizza,
+        BindingResult bindingResult
+    ) {
+        Pizza oldPizza = getPizzaById(id); //vado a prendere la pizza prima della modifica dal DB
+        if(!oldPizza.getName().equals(formPizza.getName()) && !isNameUnique(formPizza.getName())) { //se il nome è stato modificato E NON è univoco
+            bindingResult.addError(new FieldError( //creo un nuovo errore
+                    "pizza",
+                    "name",
+                    formPizza.getName(),
+                    false,
+                    null,
+                    null,
+                    "Name must be unique."
+            ));
+        }
+        if(bindingResult.hasErrors()) { //se ho trovato errori rimango sull'editor
+            return "/pizza/editor";
+        }
+
+        formPizza.setId(oldPizza.getId()); //imposto l'id della pizza aggiornata uguale all'id originale
+        pizzaRepository.save(formPizza);
+        return "redirect:/pizzas/" + formPizza.getId();
     }
 
     //UTILITIES ----------------------------------------------------------------------------------------
