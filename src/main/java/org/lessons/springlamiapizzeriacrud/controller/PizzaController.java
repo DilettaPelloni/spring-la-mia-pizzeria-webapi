@@ -62,7 +62,8 @@ public class PizzaController {
     @PostMapping("/create")
     public String store(
         @Valid @ModelAttribute("pizza") Pizza formPizza,
-        BindingResult bindingResult
+        BindingResult bindingResult,
+        RedirectAttributes redirectAttributes
     ) {
         if(!isNameUnique(formPizza.getName())) { //se il nome NON è univoco
             bindingResult.addError(new FieldError(
@@ -79,6 +80,7 @@ public class PizzaController {
             return "/pizza/editor";
         }
         pizzaRepository.save(formPizza);
+        redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Pizza " + formPizza.getName() + " created successfully!"));
         return "redirect:/pizzas/" + formPizza.getId();
     }
 
@@ -97,7 +99,8 @@ public class PizzaController {
     public String update(
         @PathVariable("id") Integer id,
         @Valid @ModelAttribute("pizza") Pizza formPizza,
-        BindingResult bindingResult
+        BindingResult bindingResult,
+        RedirectAttributes redirectAttributes
     ) {
         Pizza oldPizza = getPizzaById(id); //vado a prendere la pizza prima della modifica dal DB
         if(!oldPizza.getName().equals(formPizza.getName()) && !isNameUnique(formPizza.getName())) { //se il nome è stato modificato E NON è univoco
@@ -114,9 +117,9 @@ public class PizzaController {
         if(bindingResult.hasErrors()) { //se ho trovato errori rimango sull'editor
             return "/pizza/editor";
         }
-
         formPizza.setId(oldPizza.getId()); //imposto l'id della pizza aggiornata uguale all'id originale
         pizzaRepository.save(formPizza);
+        redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Pizza " + formPizza.getName() + " updated successfully!"));
         return "redirect:/pizzas/" + formPizza.getId();
     }
 
