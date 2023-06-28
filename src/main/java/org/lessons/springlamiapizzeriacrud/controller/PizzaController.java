@@ -52,7 +52,7 @@ public class PizzaController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("pizza", new Pizza());
-        return "pizza/create";
+        return "/pizza/editor";
     }
 
     @PostMapping("/create")
@@ -72,7 +72,7 @@ public class PizzaController {
             ));
         }
         if(bindingResult.hasErrors()) {
-            return "/pizza/create";
+            return "/pizza/editor";
         }
         pizzaRepository.save(formPizza);
         return "redirect:/pizzas/" + formPizza.getId();
