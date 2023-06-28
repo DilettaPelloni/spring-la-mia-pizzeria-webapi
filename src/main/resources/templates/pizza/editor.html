@@ -12,6 +12,7 @@
 
         <main class="col-md-9 ms-sm-auto col-lg-10 p-5">
             <div th:replace="~{fragments/body :: pageTitle(${isEdit ? 'Edit ' + pizza.name : 'New pizza'})}"></div>
+
             <form
                 id="pizza-form"
                 th:action="@{${isEdit ? '/pizzas/edit/' + pizza.id : '/pizzas/create'}}"
@@ -21,7 +22,7 @@
             >
                 <div class="col-6 mt-2">
                     <label for="name" class="form-label">
-                        Name
+                        Name*
                     </label>
                     <input
                         id="name"
@@ -30,6 +31,9 @@
                         class="form-control"
                         th:errorClass="is-invalid"
                     >
+                    <div class="form-text">
+                       Name must have a minimum length of 3 characters and a maximum length of 255 characters.
+                    </div>
                     <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
                         <ul>
                             <li th:each="err : ${#fields.errors('name')}">
@@ -40,7 +44,7 @@
                 </div>
                 <div class="col-6 mt-2">
                     <label for="price" class="form-label">
-                        Price
+                        Price*
                     </label>
                     <input
                         id="price"
@@ -50,6 +54,9 @@
                         class="form-control"
                         th:errorClass="is-invalid"
                     >
+                    <div class="form-text">
+                        Price must be positive.
+                    </div>
                     <div th:if="${#fields.hasErrors('price')}" class="invalid-feedback">
                         <ul>
                             <li th:each="err : ${#fields.errors('price')}">
@@ -60,7 +67,7 @@
                 </div>
                 <div class="mt-2" th:classAppend="${isEdit ? 'col-6' : 'col-12'}">
                     <label for="img" class="form-label">
-                        Image
+                        Image*
                     </label>
                     <input
                         id="img"
@@ -82,7 +89,7 @@
                 </div>
                 <div class="col-12 mt-2">
                     <label for="description" class="form-label">
-                        Description
+                        Description*
                     </label>
                     <textarea
                         id="description"
@@ -91,6 +98,9 @@
                         th:errorClass="is-invalid"
                         rows="5"
                     ></textarea>
+                    <div class="form-text">
+                        Description must have a minimum length of 3 characters and a maximum length of 1600 characters.
+                    </div>
                     <div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
                         <ul>
                             <li th:each="err : ${#fields.errors('description')}">
