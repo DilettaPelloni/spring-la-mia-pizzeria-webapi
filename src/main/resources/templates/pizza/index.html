@@ -63,7 +63,7 @@
                                 <a th:href="@{|/pizzas/edit/${pizza.id}|}" class="btn btn-outline-success">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <form th:action="@{|pizzas/delete/${pizza.id}|}" method="POST">
+                                <form th:action="@{|/pizzas/delete/${pizza.id}|}" method="POST">
                                     <button type="submit" class="btn btn-outline-danger">
                                         <i class="fa-solid fa-trash-can"></i>
                                     </button>

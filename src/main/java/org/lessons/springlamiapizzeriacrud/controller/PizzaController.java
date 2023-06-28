@@ -116,6 +116,16 @@ public class PizzaController {
         return "redirect:/pizzas/" + formPizza.getId();
     }
 
+    //DELETE --------------------------------------------------------------------------------------------------------------
+    @PostMapping("/delete/{id}")
+    public String delete(
+        @PathVariable("id") Integer id
+    ) {
+        Pizza pizza = getPizzaById(id);
+        pizzaRepository.delete(pizza);
+        return "redirect:/pizzas";
+    }
+
     //UTILITIES ----------------------------------------------------------------------------------------
     private boolean isNameUnique(String name){
         Optional<Pizza> result = pizzaRepository.findByName(name);
