@@ -1,6 +1,8 @@
 package org.lessons.springlamiapizzeriacrud.controller;
 
 import jakarta.validation.Valid;
+import org.lessons.springlamiapizzeriacrud.messages.AlertMessage;
+import org.lessons.springlamiapizzeriacrud.messages.AlertMessageType;
 import org.lessons.springlamiapizzeriacrud.model.Pizza;
 import org.lessons.springlamiapizzeriacrud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,7 +128,7 @@ public class PizzaController {
     ) {
         Pizza pizza = getPizzaById(id);
         pizzaRepository.delete(pizza);
-        redirectAttributes.addFlashAttribute("message", "Pizza " + pizza.getName() + " deleted successfully!");
+        redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Pizza " + pizza.getName() + " deleted successfully!"));
         return "redirect:/pizzas";
     }
 
