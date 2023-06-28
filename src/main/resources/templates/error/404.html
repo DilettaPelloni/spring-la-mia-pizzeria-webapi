@@ -10,7 +10,7 @@
                 <h1 class="fw-bolder text-primary" style="font-size: 12rem">
                     404
                 </h1>
-                <p class="mb-5 display-6 text-primary">
+                <p th:if="${message != 'No message available'}" class="mb-5 display-6 text-primary">
                     [[${message}]]
                 </p>
                 <a th:href="@{/}" class="btn btn-outline-primary">
