@@ -1,6 +1,8 @@
 package org.lessons.springlamiapizzeriacrud.controller;
 
 import jakarta.validation.Valid;
+import org.lessons.springlamiapizzeriacrud.messages.AlertMessage;
+import org.lessons.springlamiapizzeriacrud.messages.AlertMessageType;
 import org.lessons.springlamiapizzeriacrud.model.Offer;
 import org.lessons.springlamiapizzeriacrud.model.Pizza;
 import org.lessons.springlamiapizzeriacrud.repository.OfferRepository;
@@ -13,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -44,12 +47,14 @@ public class OfferController {
     @PostMapping("/create")
     public String store(
         @Valid @ModelAttribute("offer") Offer formOffer,
-        BindingResult bindingResult
+        BindingResult bindingResult,
+        RedirectAttributes redirectAttributes
     ) {
         if(bindingResult.hasErrors()) {
             return "offer/editor";
         }
         offerRepository.save(formOffer);
+        redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Offer " + formOffer.getTitle() + " created successfully!"));
         return "redirect:/pizzas/" + formOffer.getPizza().getId();
     }
 
@@ -68,23 +73,27 @@ public class OfferController {
     public String update(
         @PathVariable("id") Integer id,
         @Valid @ModelAttribute("offer") Offer formOffer,
-        BindingResult bindingResult
+        BindingResult bindingResult,
+        RedirectAttributes redirectAttributes
     ) {
         if(bindingResult.hasErrors()) {
             return "offer/editor";
         }
         formOffer.setId(id);
         offerRepository.save(formOffer);
+        redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Offer " + formOffer.getTitle() + " updated successfully!"));
         return "redirect:/pizzas/" + formOffer.getPizza().getId();
     }
 
     //DELETE ------------------------------------------------------------------------------
     @PostMapping("delete/{id}")
     public String delete(
-        @PathVariable("id") Integer id
+        @PathVariable("id") Integer id,
+        RedirectAttributes redirectAttributes
     ) {
         Offer offer = getOfferById(id);
         offerRepository.delete(offer);
+        redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Offer " + offer.getTitle() + " deleted successfully!"));
         return "redirect:/pizzas/" + offer.getPizza().getId();
     }
 
