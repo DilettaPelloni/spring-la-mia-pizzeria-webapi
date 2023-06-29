@@ -25,6 +25,10 @@ public class Offer {
     @Column(nullable = false)
     private LocalDate endDate;
 
+    @ManyToOne
+    @JoinColumn(name="pizza_id", nullable = false)
+    private Pizza pizza;
+
 
     //GETTERS & SETTERS -------------------------------------------------------------------------
     public Integer getId() {
@@ -57,5 +61,13 @@ public class Offer {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public Pizza getPizza() {
+        return pizza;
+    }
+
+    public void setPizza(Pizza pizza) {
+        this.pizza = pizza;
     }
 }

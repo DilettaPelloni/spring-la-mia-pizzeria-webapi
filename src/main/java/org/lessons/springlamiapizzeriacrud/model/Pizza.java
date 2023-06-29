@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "pizzas")
@@ -32,6 +34,8 @@ public class Pizza {
     @NotNull(message = "Price must not be null")
     private BigDecimal price;
 
+    @OneToMany(mappedBy = "pizza")
+    List<Offer> offers = new ArrayList<>(); //la inizializzo per assicurarmi che non sia mai null
 
     //GETTERS E SETTERS ----------------------------------------------------------
     public Integer getId() {
