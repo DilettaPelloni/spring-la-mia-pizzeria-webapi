@@ -80,7 +80,7 @@
                                 <a th:href="@{/offers/create(pizzaId=*{id})}" class="btn btn-primary mb-3" title="new offer">
                                     <i class="fa-solid fa-plus"></i>
                                 </a>
-                                <table class="table table-striped table-sm">
+                                <table th:if="*{offers.size() > 0}" class="table table-striped table-sm">
                                     <thead>
                                         <tr>
                                             <th>Title</th>
@@ -96,6 +96,9 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <div th:unless="*{offers.size() > 0}" class="alert alert-primary" role="alert">
+                                    <p class="m-0">No items found</p>
+                                </div>
                             </div>
                         </div>
                     </div>
