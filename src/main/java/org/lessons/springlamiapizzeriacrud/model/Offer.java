@@ -2,6 +2,7 @@ package org.lessons.springlamiapizzeriacrud.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
@@ -20,9 +21,11 @@ public class Offer {
     private String title;
 
     @Column(nullable = false)
+    @NotNull(message = "Start date must not be null")
     private LocalDate startDate;
 
     @Column(nullable = false)
+    @NotNull(message = "End date must not be null")
     private LocalDate endDate;
 
     @ManyToOne
