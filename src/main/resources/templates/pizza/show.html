@@ -86,13 +86,19 @@
                                             <th>Title</th>
                                             <th>Start date</th>
                                             <th>End date</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="offer : *{offers}" th:object="${offer}">
+                                        <tr th:each="offer : *{offers}" th:object="${offer}" class="align-middle">
                                             <td>[[*{title}]]</td>
                                             <td>[[*{#temporals.format(startDate, 'dd/MM/yyyy')}]]</td>
                                             <td>[[*{#temporals.format(endDate, 'dd/MM/yyyy')}]]</td>
+                                            <td>
+                                                <a th:href="@{|/offers/edit/*{id}|}" class="btn btn-outline-success">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                </a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

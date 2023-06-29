@@ -25,6 +25,7 @@ public class OfferController {
     @Autowired
     OfferRepository offerRepository;
 
+    //CREATE ------------------------------------------------------------------------------
     @GetMapping("/create")
     public String create(
         Model model,
@@ -50,6 +51,40 @@ public class OfferController {
         }
         offerRepository.save(formOffer);
         return "redirect:/pizzas/" + formOffer.getPizza().getId();
+    }
+
+    //UPDATE ------------------------------------------------------------------------------
+    @GetMapping("/edit/{id}")
+    public String edit(
+        @PathVariable("id") Integer id,
+        Model model
+    ) {
+        Offer offer = getOfferById(id);
+        model.addAttribute("offer", offer);
+        return "offer/editor";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String update(
+        @PathVariable("id") Integer id,
+        @Valid @ModelAttribute("offer") Offer formOffer,
+        BindingResult bindingResult
+    ) {
+        if(bindingResult.hasErrors()) {
+            return "offer/editor";
+        }
+        formOffer.setId(id);
+        offerRepository.save(formOffer);
+        return "redirect:/pizzas/" + formOffer.getPizza().getId();
+    }
+
+    //UTILITY ------------------------------------------------------------------------------
+    private Offer getOfferById(Integer id) {
+        Optional<Offer> offer = offerRepository.findById(id);
+        if(offer.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Offer with id " + id + " not found");
+        }
+        return offer.get();
     }
 
 }

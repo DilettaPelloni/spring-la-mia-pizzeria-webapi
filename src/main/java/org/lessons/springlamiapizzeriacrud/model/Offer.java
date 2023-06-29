@@ -17,7 +17,7 @@ public class Offer {
     @Column(nullable = false)
     @NotBlank(message = "Title must not be null or blank")
     @Size(min=3, max=255, message = "Name must have min 3 and max 255 characters")
-    private String Title;
+    private String title;
 
     @Column(nullable = false)
     private LocalDate startDate;
@@ -40,11 +40,11 @@ public class Offer {
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
     public void setTitle(String title) {
-        Title = title;
+        this.title = title;
     }
 
     public LocalDate getStartDate() {
