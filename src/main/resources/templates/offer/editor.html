@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/head :: head(' - Offer editor')}"></head>
+
+<body th:with="isEdit = ${offer.id != null}">
+<header th:replace="~{fragments/body :: header}"></header>
+
+<div class="container-fluid">
+    <div class="row" style="min-height: 90vh">
+        <nav th:replace="~{fragments/body :: aside('pizzas')}"></nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 p-5">
+            <div th:replace="~{fragments/body :: pageTitle(${isEdit ? 'Edit ' + offer.title : 'New offer'})}"></div>
+
+            <form
+                id="offer-form"
+                th:action="@{${isEdit ? '/offers/edit/' + offer.id : '/offers/create'}}"
+                method="POST"
+                th:object="${offer}"
+                class="row"
+            >
+                <input type="hidden" th:field="*{pizza}">
+                <div class="col-12 mt-2">
+                    <label for="title" class="form-label">
+                        Title*
+                    </label>
+                    <input
+                        id="title"
+                        type="text"
+                        th:field="*{title}"
+                        class="form-control"
+                        th:errorClass="is-invalid"
+                    >
+                    <div class="form-text">
+                       Title must have a minimum length of 3 characters and a maximum length of 255 characters.
+                    </div>
+                    <div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('title')}">
+                                [[${err}]]
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-6 mt-2">
+                    <label for="startDate" class="form-label">
+                        Start date*
+                    </label>
+                    <input
+                        id="startDate"
+                        type="date"
+                        th:field="*{startDate}"
+                        class="form-control"
+                        th:errorClass="is-invalid"
+                    >
+                    <div th:if="${#fields.hasErrors('startDate')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('startDate')}">
+                                [[${err}]]
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-6 mt-2">
+                    <label for="endDate" class="form-label">
+                        End date*
+                    </label>
+                    <input
+                            id="endDate"
+                            type="date"
+                            th:field="*{endDate}"
+                            class="form-control"
+                            th:errorClass="is-invalid"
+                    >
+                    <div th:if="${#fields.hasErrors('endDate')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('endDate')}">
+                                [[${err}]]
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12 mt-4">
+                    <button type="submit" class="btn btn-outline-success">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                    <button type="reset" class="btn btn-outline-warning">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                    <a th:href="@{|/pizzas/*{pizza.id}|}" class="btn btn-outline-primary">
+                        Back
+                    </a>
+                </div>
+            </form>
+        </main>
+
+    </div>
+</div>
+
+</body>
+</html>
