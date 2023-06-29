@@ -14,7 +14,7 @@ public class Offer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     @NotBlank(message = "Title must not be null or blank")
     @Size(min=3, max=255, message = "Name must have min 3 and max 255 characters")
     private String Title;
