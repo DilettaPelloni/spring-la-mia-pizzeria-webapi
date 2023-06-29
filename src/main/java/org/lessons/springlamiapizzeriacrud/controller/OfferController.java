@@ -1,16 +1,17 @@
 package org.lessons.springlamiapizzeriacrud.controller;
 
+import jakarta.validation.Valid;
 import org.lessons.springlamiapizzeriacrud.model.Offer;
 import org.lessons.springlamiapizzeriacrud.model.Pizza;
+import org.lessons.springlamiapizzeriacrud.repository.OfferRepository;
 import org.lessons.springlamiapizzeriacrud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -21,7 +22,8 @@ public class OfferController {
 
     @Autowired
     PizzaRepository pizzaRepository;
-
+    @Autowired
+    OfferRepository offerRepository;
 
     @GetMapping("/create")
     public String create(
@@ -36,6 +38,18 @@ public class OfferController {
         offer.setPizza(pizza.get()); //la metto dentro alla nuova istanza di Offer
         model.addAttribute("offer", offer);
         return "offer/editor";
+    }
+
+    @PostMapping("/create")
+    public String store(
+        @Valid @ModelAttribute("offer") Offer formOffer,
+        BindingResult bindingResult
+    ) {
+        if(bindingResult.hasErrors()) {
+            return "offer/editor";
+        }
+        offerRepository.save(formOffer);
+        return "redirect:/pizzas/" + formOffer.getPizza().getId();
     }
 
 }
