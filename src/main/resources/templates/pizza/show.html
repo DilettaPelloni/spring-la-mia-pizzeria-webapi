@@ -94,10 +94,15 @@
                                             <td>[[*{title}]]</td>
                                             <td>[[*{#temporals.format(startDate, 'dd/MM/yyyy')}]]</td>
                                             <td>[[*{#temporals.format(endDate, 'dd/MM/yyyy')}]]</td>
-                                            <td>
+                                            <td class="d-flex gap-2">
                                                 <a th:href="@{|/offers/edit/*{id}|}" class="btn btn-outline-success">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
+                                                <form th:action="@{|/offers/delete/*{id}|}" method="POST">
+                                                    <button type="submit" class="btn btn-outline-danger">
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     </tbody>

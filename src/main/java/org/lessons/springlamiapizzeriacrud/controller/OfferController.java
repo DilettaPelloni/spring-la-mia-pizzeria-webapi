@@ -78,6 +78,16 @@ public class OfferController {
         return "redirect:/pizzas/" + formOffer.getPizza().getId();
     }
 
+    //DELETE ------------------------------------------------------------------------------
+    @PostMapping("delete/{id}")
+    public String delete(
+        @PathVariable("id") Integer id
+    ) {
+        Offer offer = getOfferById(id);
+        offerRepository.delete(offer);
+        return "redirect:/pizzas/" + offer.getPizza().getId();
+    }
+
     //UTILITY ------------------------------------------------------------------------------
     private Offer getOfferById(Integer id) {
         Optional<Offer> offer = offerRepository.findById(id);
