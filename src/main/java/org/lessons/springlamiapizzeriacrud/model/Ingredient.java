@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "ingredients")
 public class Ingredient {
@@ -23,6 +26,9 @@ public class Ingredient {
     @Size(min=3, max=500, message = "Description must have min 3 and max 500 characters")
     private String description;
 
+    @ManyToMany(mappedBy = "ingredients")
+    private List<Pizza> pizzas = new ArrayList<>();
+
     //GETTERS E SETTERS ---------------------------------------------------------------
     public Integer getId() {
         return id;
@@ -41,5 +47,11 @@ public class Ingredient {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+    public List<Pizza> getPizzas() {
+        return pizzas;
+    }
+    public void setPizzas(List<Pizza> pizzas) {
+        this.pizzas = pizzas;
     }
 }

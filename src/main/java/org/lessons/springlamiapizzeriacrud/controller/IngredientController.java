@@ -83,7 +83,10 @@ public class IngredientController {
         RedirectAttributes redirectAttributes
     ) {
         Ingredient ingredient = getIngredientById(id);
-        ingredientRepository.delete(ingredient);
+        for (Pizza p : ingredient.getPizzas()) { //ciclo tutte le pizze che hanno questo ingrediente
+            p.getIngredients().remove(ingredient); //da ciascuna rimuovo questo ingrediente
+        }
+        ingredientRepository.delete(ingredient); //poi posso cancellare l'ingrediente
         redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Ingredient "+ingredient.getName()+" deleted successfully!"));
         return "redirect:/ingredients";
     }
