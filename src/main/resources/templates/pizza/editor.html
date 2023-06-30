@@ -123,10 +123,16 @@
                         <!--INGREDIENTI-->
                         <h5 class="text-primary">Ingredients</h5>
                         <hr>
-                        <div th:each="ingredient : ${ingList}" th:object="${ingredient}" class="form-check">
-                            <input class="form-check-input" type="checkbox" th:value="*{id}" th:id="|ing-*{id}|">
+                        <div th:each="ing : ${ingList}" class="form-check">
+                            <input
+                                type="checkbox"
+                                th:id="|ing-${ing.id}|"
+                                th:value="${ing.id}"
+                                th:field="*{ingredients}"
+                                class="form-check-input"
+                            >
                             <label class="form-check-label" th:for="|ing-*{id}|">
-                                [[*{name}]]
+                                [[${ing.name}]]
                             </label>
                         </div>
                     </div>

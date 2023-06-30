@@ -67,7 +67,8 @@ public class PizzaController {
     public String store(
         @Valid @ModelAttribute("pizza") Pizza formPizza,
         BindingResult bindingResult,
-        RedirectAttributes redirectAttributes
+        RedirectAttributes redirectAttributes,
+        Model model
     ) {
         if(!isNameUnique(formPizza.getName())) { //se il nome NON è univoco
             bindingResult.addError(new FieldError(
@@ -81,6 +82,7 @@ public class PizzaController {
             ));
         }
         if(bindingResult.hasErrors()) {
+            model.addAttribute("ingList", ingredientRepository.findAll());
             return "/pizza/editor";
         }
         pizzaRepository.save(formPizza);
@@ -95,6 +97,7 @@ public class PizzaController {
         Model model
     ) {
         Pizza pizza = getPizzaById(id);
+        model.addAttribute("ingList", ingredientRepository.findAll());
         model.addAttribute(pizza);
         return "/pizza/editor";
     }
@@ -104,7 +107,8 @@ public class PizzaController {
         @PathVariable("id") Integer id,
         @Valid @ModelAttribute("pizza") Pizza formPizza,
         BindingResult bindingResult,
-        RedirectAttributes redirectAttributes
+        RedirectAttributes redirectAttributes,
+        Model model
     ) {
         Pizza oldPizza = getPizzaById(id); //vado a prendere la pizza prima della modifica dal DB
         if(!oldPizza.getName().equals(formPizza.getName()) && !isNameUnique(formPizza.getName())) { //se il nome è stato modificato E NON è univoco
@@ -119,6 +123,7 @@ public class PizzaController {
             ));
         }
         if(bindingResult.hasErrors()) { //se ho trovato errori rimango sull'editor
+            model.addAttribute("ingList", ingredientRepository.findAll());
             return "/pizza/editor";
         }
         formPizza.setId(oldPizza.getId()); //imposto l'id della pizza aggiornata uguale all'id originale
