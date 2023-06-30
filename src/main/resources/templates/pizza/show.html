@@ -71,6 +71,19 @@
                                             </p>
                                         </div>
                                     </div>
+                                    <div class="list-group-item d-flex align-items-center gap-3">
+                                        <i class="fa-solid fa-wheat-awn text-primary"></i>
+                                        <div class="w-100">
+                                            <h6 class="mb-0">
+                                                Ingredients
+                                            </h6>
+                                            <ul th:if="*{ingredients.size() > 0}" class="mb-1 ps-0" style="list-style:none;">
+                                                <li th:each="ingredient : *{ingredients}" class="opacity-75">
+                                                    [[${ingredient.name}]]
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!--OFFERTE-->
