@@ -70,8 +70,11 @@ public class IngredientController {
             model.addAttribute("ingredients", ingredients);
             return "/ingredient/index";
         }
+        //testo per messaggio
+        String action ="created";
+        if(formIngredient.getId() != null) { action = "updated"; }
         ingredientRepository.save(formIngredient);
-        redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Ingredient " + formIngredient.getName() + " created successfully!"));
+        redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Ingredient "+formIngredient.getName()+" "+action+" successfully!"));
         return "redirect:/ingredients";
     }
 
