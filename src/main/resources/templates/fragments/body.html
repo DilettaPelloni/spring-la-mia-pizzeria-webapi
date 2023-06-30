@@ -35,11 +35,12 @@
                 </li>
                 <li class="nav-item">
                     <a
-                            th:href="@{/pizzas}"
+                            th:href="@{/ingredients}"
                             class="nav-link"
-                            th:classappend="${page == '--' ? 'active' : ''}"
+                            th:classappend="${page == 'ingredients' ? 'active' : ''}"
                     >
-                        ---------
+                        <i class="fa-solid fa-wheat-awn me-2"></i>
+                        Ingredients
                     </a>
                 </li>
                 <li class="nav-item">
