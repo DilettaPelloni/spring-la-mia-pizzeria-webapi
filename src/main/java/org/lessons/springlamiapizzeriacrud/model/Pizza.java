@@ -35,52 +35,56 @@ public class Pizza {
     private BigDecimal price;
 
     @OneToMany(mappedBy = "pizza")
-    List<Offer> offers = new ArrayList<>(); //la inizializzo per assicurarmi che non sia mai null
+    private List<Offer> offers = new ArrayList<>(); //la inizializzo per assicurarmi che non sia mai null
+
+    @ManyToMany
+    @JoinTable(
+        name = "ingredient_pizza",
+        joinColumns = @JoinColumn(name = "pizza_id"),
+        inverseJoinColumns = @JoinColumn(name = "ingredient_id")
+    )
+    private List<Ingredient> ingredients = new ArrayList<>();
+
 
     //GETTERS E SETTERS ----------------------------------------------------------
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
-
     public String getImg() { return img; }
-
     public void setImg(String img) {
         this.img = img;
     }
-
     public BigDecimal getPrice() {
         return price;
     }
-
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-
     public List<Offer> getOffers() {
         return offers;
     }
-
     public void setOffers(List<Offer> offers) {
         this.offers = offers;
+    }
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }
