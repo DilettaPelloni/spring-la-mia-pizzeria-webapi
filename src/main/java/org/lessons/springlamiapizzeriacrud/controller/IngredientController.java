@@ -7,14 +7,13 @@ import org.lessons.springlamiapizzeriacrud.model.Ingredient;
 import org.lessons.springlamiapizzeriacrud.model.Pizza;
 import org.lessons.springlamiapizzeriacrud.repository.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -28,8 +27,22 @@ public class IngredientController {
     IngredientRepository ingredientRepository;
 
     @GetMapping
-    public String index(Model model) {
-        model.addAttribute("ingObj", new Ingredient()); //per l'editor
+    public String index(
+        @RequestParam(value = "edit") Optional<Integer> ingId, //se accedo a questa rotta dal pulsante edit passo un parametro con l'id dell'ingrediente da modificare
+        Model model
+    ) {
+        Ingredient ingObj; //preparo la variabile che conterrà l'ingrediente da passare al form
+        if(ingId.isPresent()) { //se mi è stato passato il parametro
+            Optional<Ingredient> result = ingredientRepository.findById(ingId.get()); //cerco l'ingrediente a DB
+            if(result.isPresent()) { //se lo trovo lo passo alla variabile
+                ingObj = result.get();
+            } else { //se non lo trovo, passo un'istanza vuota
+                    ingObj = new Ingredient();
+            }
+        } else { //se non mi sono stati dati parametri, passo un'istanza vuota
+            ingObj = new Ingredient();
+        }
+        model.addAttribute("ingObj", ingObj); //per l'editor
         List<Ingredient> ingredients = ingredientRepository.findAll(); //per mostrare l'elenco degli ingredienti
         model.addAttribute("ingredients", ingredients);
         return "/ingredient/index";
@@ -66,6 +79,13 @@ public class IngredientController {
     private boolean isNameUnique(String name){
         Optional<Ingredient> result = ingredientRepository.findByName(name);
         return result.isEmpty();
+    }
+    private Ingredient getIngredientById(Integer id) {
+        Optional<Ingredient> result = ingredientRepository.findById(id);
+        if(result.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Ingredient with id " + id + " not found");
+        }
+        return result.get();
     }
 
 }
