@@ -16,7 +16,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.Optional;
 
 @Controller
@@ -24,9 +23,9 @@ import java.util.Optional;
 public class OfferController {
 
     @Autowired
-    PizzaRepository pizzaRepository;
+    private PizzaRepository pizzaRepository;
     @Autowired
-    OfferRepository offerRepository;
+    private OfferRepository offerRepository;
 
     //CREATE ------------------------------------------------------------------------------
     @GetMapping("/create")

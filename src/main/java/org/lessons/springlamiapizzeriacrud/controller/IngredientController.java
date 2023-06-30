@@ -24,7 +24,7 @@ import java.util.Optional;
 public class IngredientController {
 
     @Autowired
-    IngredientRepository ingredientRepository;
+    private IngredientRepository ingredientRepository;
 
     @GetMapping
     public String index(

@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.lessons.springlamiapizzeriacrud.messages.AlertMessage;
 import org.lessons.springlamiapizzeriacrud.messages.AlertMessageType;
 import org.lessons.springlamiapizzeriacrud.model.Pizza;
+import org.lessons.springlamiapizzeriacrud.repository.IngredientRepository;
 import org.lessons.springlamiapizzeriacrud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,8 @@ public class PizzaController {
 
     @Autowired
     private PizzaRepository pizzaRepository;
+    @Autowired
+    private IngredientRepository ingredientRepository;
 
     //READ --------------------------------------------------------------------------------------------------------------
     @GetMapping
@@ -55,6 +58,7 @@ public class PizzaController {
     //CREATE --------------------------------------------------------------------------------------------------------------
     @GetMapping("/create")
     public String create(Model model) {
+        model.addAttribute("ingList", ingredientRepository.findAll());
         model.addAttribute("pizza", new Pizza());
         return "/pizza/editor";
     }
