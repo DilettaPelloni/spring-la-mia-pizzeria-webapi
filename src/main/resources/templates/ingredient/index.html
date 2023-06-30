@@ -33,10 +33,17 @@
                                 <tr th:each="ingredient : ${ingredients}" th:object="${ingredient}" class="align-middle">
                                     <td th:text="*{name}"></td>
                                     <td th:text="*{description}" class="text-break"></td>
-                                    <td class="">
-                                        <a th:href="@{/ingredients(edit=*{id})}" class="btn btn-outline-success btn-sm ">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
+                                    <td>
+                                        <div class="d-flex gap-1">
+                                            <a th:href="@{/ingredients(edit=*{id})}" class="btn btn-outline-success btn-sm">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                            <form th:action="@{|/ingredients/delete/*{id}|}" method="POST">
+                                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>

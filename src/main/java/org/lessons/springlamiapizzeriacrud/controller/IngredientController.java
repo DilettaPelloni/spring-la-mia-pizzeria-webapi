@@ -63,7 +63,6 @@ public class IngredientController {
                     false,null,null,
                     "Name must be unique."
             ));
-
         }
         if(bindingResult.hasErrors()) { //se ci sono errori
             List<Ingredient> ingredients = ingredientRepository.findAll();
@@ -75,6 +74,17 @@ public class IngredientController {
         if(formIngredient.getId() != null) { action = "updated"; }
         ingredientRepository.save(formIngredient);
         redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Ingredient "+formIngredient.getName()+" "+action+" successfully!"));
+        return "redirect:/ingredients";
+    }
+
+    @PostMapping("delete/{id}")
+    public String delete(
+        @PathVariable Integer id,
+        RedirectAttributes redirectAttributes
+    ) {
+        Ingredient ingredient = getIngredientById(id);
+        ingredientRepository.delete(ingredient);
+        redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Ingredient "+ingredient.getName()+" deleted successfully!"));
         return "redirect:/ingredients";
     }
 
