@@ -19,7 +19,8 @@ public class IngredientController {
 
     @GetMapping
     public String index(Model model) {
-        List<Ingredient> ingredients = ingredientRepository.findAll();
+        List<Ingredient> ingredients = ingredientRepository.findAll(); //per mostrare l'elenco degli ingredienti
+        model.addAttribute("ingObj", new Ingredient()); //per l'editor
         model.addAttribute("ingredients", ingredients);
         return "/ingredient/index";
     }
