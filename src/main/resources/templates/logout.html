@@ -1,15 +1,16 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{/fragments/head :: head(' - Login')}"></head>
-<body>
-    <main class="vh-100 container-fluid d-flex align-items-center bg-primary-subtle">
-        <div class="card mx-auto">
-            <div class="card-header bg-primary text-white text-center">
-                <h1>LOGOUT</h1>
+<body class="bg-primary-subtle">
+    <main class="vh-100 container">
+        <div class="row h-100 d-flex align-items-center">
+            <div class="col-lg-6 col-sm-12 text-center">
+                <img th:src="@{/img/logo-dark.png}">
             </div>
-            <div class="card-body p-5">
+            <div class="col-lg-6 col-sm-12 px-5">
+                <h1 class="mb-5 text-primary">LOGOUT</h1>
                 <h3>Are you sure to log out?</h3>
-                <form th:action="@{/logout}" method="post" class="mt-4 text-center">
+                <form th:action="@{/logout}" method="post" class="mt-4">
                     <button type="submit" class="btn btn-primary btn-lg">
                         Log Out
                     </button>
