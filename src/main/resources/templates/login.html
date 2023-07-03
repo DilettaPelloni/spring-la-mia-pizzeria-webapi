@@ -1,13 +1,14 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{/fragments/head :: head(' - Login')}"></head>
-<body>
-    <main class="vh-100 container-fluid d-flex align-items-center bg-primary-subtle">
-        <div class="card mx-auto">
-            <div class="card-header bg-primary text-white text-center">
-                <h1>LOGIN</h1>
+<body class="bg-primary-subtle">
+    <main class="vh-100 container">
+        <div class="row h-100 d-flex align-items-center">
+            <div class="col-lg-6 col-sm-12 text-center">
+                <img th:src="@{/img/logo-dark.png}">
             </div>
-            <div class="card-body px-5">
+            <div class="col-lg-6 col-sm-12 px-5">
+                <h1 class="mb-5 text-primary">LOGIN</h1>
                 <form th:action="@{/login.html}" method="post">
                     <div class="mb-3">
                         <label for="email" class="form-label">
@@ -21,7 +22,7 @@
                                 class="form-control"
                         />
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-5">
                         <label for="password" class="form-label">
                             Password
                         </label>:
