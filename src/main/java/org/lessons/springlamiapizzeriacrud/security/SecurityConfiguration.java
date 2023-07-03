@@ -43,7 +43,9 @@ public class SecurityConfiguration {
                 .requestMatchers("/pizzas/**").hasAnyAuthority("ADMIN","USER")
                 .requestMatchers(("/**")).permitAll()
                 .and().formLogin()
-                .and().logout();
+                    .loginPage("/login.html")
+                .and().logout()
+                    .logoutSuccessUrl("/");
         return http.build();
     }
 

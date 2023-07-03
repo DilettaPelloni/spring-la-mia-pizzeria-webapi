@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/fragments/head :: head(' - Login')}"></head>
+<body>
+    <main class="vh-100 container-fluid d-flex align-items-center bg-primary-subtle">
+        <div class="card mx-auto">
+            <div class="card-header bg-primary text-white text-center">
+                <h1>LOGOUT</h1>
+            </div>
+            <div class="card-body p-5">
+                <h3>Are you sure to log out?</h3>
+                <form th:action="@{/logout}" method="post" class="mt-4 text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        Log Out
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
