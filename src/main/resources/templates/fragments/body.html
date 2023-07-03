@@ -33,7 +33,7 @@
                         Pizzas
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                     <a
                             th:href="@{/ingredients}"
                             class="nav-link"
@@ -41,33 +41,6 @@
                     >
                         <i class="fa-solid fa-wheat-awn me-2"></i>
                         Ingredients
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a
-                            th:href="@{/pizzas}"
-                            class="nav-link"
-                            th:classappend="${page == '--' ? 'active' : ''}"
-                    >
-                        ---------
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a
-                            th:href="@{/pizzas}"
-                            class="nav-link"
-                            th:classappend="${page == '--' ? 'active' : ''}"
-                    >
-                        ---------
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a
-                            th:href="@{/pizzas}"
-                            class="nav-link"
-                            th:classappend="${page == '--' ? 'active' : ''}"
-                    >
-                        ---------
                     </a>
                 </li>
             </ul>
