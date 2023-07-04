@@ -59,6 +59,12 @@ public class PizzaRestController {
         return pizzaService.update(id, pizza);
     }
 
-
+    //DELETE -------------------------------------------
+    @DeleteMapping("/{id}")
+    public void delete(
+        @PathVariable Integer id
+    ) {
+        pizzaService.deleteById(id);
+    }
 
 }

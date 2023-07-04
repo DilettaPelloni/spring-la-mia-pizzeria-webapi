@@ -40,4 +40,8 @@ public class PizzaService {
         return pizzaRepository.save(pizza);
     }
 
+    public void deleteById(Integer id) {
+        pizzaRepository.deleteById(id);
+    }
+
 }
