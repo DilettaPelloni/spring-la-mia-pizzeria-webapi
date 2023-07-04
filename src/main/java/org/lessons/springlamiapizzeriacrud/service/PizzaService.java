@@ -1,5 +1,6 @@
 package org.lessons.springlamiapizzeriacrud.service;
 
+import org.lessons.springlamiapizzeriacrud.exceptions.PizzaNotFoundException;
 import org.lessons.springlamiapizzeriacrud.model.Pizza;
 import org.lessons.springlamiapizzeriacrud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,4 +22,12 @@ public class PizzaService {
         }
     }
 
+    public Pizza getById(Integer id) throws PizzaNotFoundException {
+        Optional<Pizza> pizza = pizzaRepository.findById(id);
+        if(pizza.isPresent()) {
+            return pizza.get();
+        } else {
+            throw new PizzaNotFoundException("Pizza with id "+id+" not found!");
+        }
+    }
 }
