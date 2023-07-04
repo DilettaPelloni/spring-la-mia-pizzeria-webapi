@@ -1,5 +1,7 @@
 package org.lessons.springlamiapizzeriacrud.api;
 
+import jakarta.validation.Valid;
+import org.aspectj.apache.bcel.generic.RET;
 import org.lessons.springlamiapizzeriacrud.exceptions.PizzaNotFoundException;
 import org.lessons.springlamiapizzeriacrud.model.Pizza;
 import org.lessons.springlamiapizzeriacrud.repository.PizzaRepository;
@@ -39,4 +41,14 @@ public class PizzaRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+
+    //CREATE -------------------------------------------
+    @PostMapping
+    public Pizza create(
+        @Valid @RequestBody Pizza pizza
+    ) {
+        return pizzaService.create(pizza);
+    }
+
+
 }

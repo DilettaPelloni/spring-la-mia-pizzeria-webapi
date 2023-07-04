@@ -30,4 +30,9 @@ public class PizzaService {
             throw new PizzaNotFoundException("Pizza with id "+id+" not found!");
         }
     }
+
+    public Pizza create(Pizza pizza) {
+        return pizzaRepository.save(pizza);
+    }
+
 }
