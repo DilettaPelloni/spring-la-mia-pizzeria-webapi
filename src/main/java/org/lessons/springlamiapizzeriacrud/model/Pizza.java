@@ -2,6 +2,7 @@ package org.lessons.springlamiapizzeriacrud.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.lessons.springlamiapizzeriacrud.annotations.UniquePizzaName;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class Pizza {
 
     //COLONNE ----------------------------------------------------------
     @Column(nullable = false, unique = true)
+//    @UniquePizzaName
     @NotBlank(message = "Name must not be null or blank")
     @Size(min=3, max=255, message = "Name must have min 3 and max 255 characters")
     private String name;
