@@ -34,6 +34,7 @@ public class SecurityConfiguration {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
+                .requestMatchers("/api/**").permitAll() //per far funzionare le API
                 .requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
                 .requestMatchers("/pizzas/create").hasAuthority("ADMIN")
                 .requestMatchers("/pizzas/edit/**").hasAuthority("ADMIN")
@@ -46,6 +47,9 @@ public class SecurityConfiguration {
                     .loginPage("/login")
                 .and().logout()
                     .logoutSuccessUrl("/");
+
+        http.csrf().disable(); //per far funzionare le API
+
         return http.build();
     }
 

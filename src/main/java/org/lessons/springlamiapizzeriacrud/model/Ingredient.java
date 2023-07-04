@@ -1,5 +1,6 @@
 package org.lessons.springlamiapizzeriacrud.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -26,6 +27,7 @@ public class Ingredient {
     @Size(min=3, max=500, message = "Description must have min 3 and max 500 characters")
     private String description;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "ingredients")
     private List<Pizza> pizzas = new ArrayList<>();
 
