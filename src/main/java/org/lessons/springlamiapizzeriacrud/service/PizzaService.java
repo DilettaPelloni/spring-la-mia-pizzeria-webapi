@@ -35,4 +35,9 @@ public class PizzaService {
         return pizzaRepository.save(pizza);
     }
 
+    public Pizza update(Integer id, Pizza pizza) {
+        pizza.setId(id);
+        return pizzaRepository.save(pizza);
+    }
+
 }

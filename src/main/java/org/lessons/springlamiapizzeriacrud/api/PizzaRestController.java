@@ -50,5 +50,15 @@ public class PizzaRestController {
         return pizzaService.create(pizza);
     }
 
+    //UPDATE -------------------------------------------
+    @PutMapping("/{id}")
+    public Pizza update(
+        @PathVariable Integer id,
+        @Valid @RequestBody Pizza pizza
+    ) {
+        return pizzaService.update(id, pizza);
+    }
+
+
 
 }
