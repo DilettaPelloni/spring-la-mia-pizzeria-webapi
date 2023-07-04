@@ -18,7 +18,7 @@ public class SecurityConfiguration {
         return new DbUserDetailService();
     }
 
-    @Bean
+    @Bean //??
     PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
@@ -35,15 +35,15 @@ public class SecurityConfiguration {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
-                .requestMatchers("/pizzas").hasAnyAuthority("ADMIN","USER")
                 .requestMatchers("/pizzas/create").hasAuthority("ADMIN")
                 .requestMatchers("/pizzas/edit/**").hasAuthority("ADMIN")
                 .requestMatchers("/ingredients").hasAuthority("ADMIN")
                 .requestMatchers("/offers/**").hasAuthority("ADMIN")
+                .requestMatchers("/pizzas").hasAnyAuthority("ADMIN","USER")
                 .requestMatchers("/pizzas/**").hasAnyAuthority("ADMIN","USER")
                 .requestMatchers(("/**")).permitAll()
                 .and().formLogin()
-                    .loginPage("/login.html")
+                    .loginPage("/login")
                 .and().logout()
                     .logoutSuccessUrl("/");
         return http.build();
