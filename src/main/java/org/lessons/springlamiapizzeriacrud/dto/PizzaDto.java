@@ -25,6 +25,7 @@ public class PizzaDto {
     private String description;
     //IMAGE
     private MultipartFile image;
+    private String img;
     //PRICE
     @PositiveOrZero(message = "Price must have a positive value")
     @NotNull(message = "Price must not be null")
@@ -55,6 +56,12 @@ public class PizzaDto {
     }
     public void setImage(MultipartFile image) {
         this.image = image;
+    }
+    public String getImg() {
+        return img;
+    }
+    public void setImg(String img) {
+        this.img = img;
     }
     public BigDecimal getPrice() {
         return price;

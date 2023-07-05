@@ -2,6 +2,7 @@ package org.lessons.springlamiapizzeriacrud.controller;
 
 import jakarta.validation.Valid;
 import org.lessons.springlamiapizzeriacrud.dto.PizzaDto;
+import org.lessons.springlamiapizzeriacrud.exceptions.PizzaNotFoundException;
 import org.lessons.springlamiapizzeriacrud.messages.AlertMessage;
 import org.lessons.springlamiapizzeriacrud.messages.AlertMessageType;
 import org.lessons.springlamiapizzeriacrud.model.Pizza;
@@ -91,10 +92,14 @@ public class PizzaController {
         @PathVariable("id") Integer id,
         Model model
     ) {
-        Pizza pizza = getPizzaById(id);
-        model.addAttribute("ingList", ingredientRepository.findAll());
-        model.addAttribute(pizza);
-        return "/pizza/editor";
+        try {
+            PizzaDto pizzaDto = pizzaService.getPizzaDtoById(id);
+            model.addAttribute("ingList", ingredientRepository.findAll());
+            model.addAttribute("pizza", pizzaDto);
+            return "/pizza/editor";
+        } catch (PizzaNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza with id "+id+" not found");
+        }
     }
 
     @PostMapping("/edit/{id}")

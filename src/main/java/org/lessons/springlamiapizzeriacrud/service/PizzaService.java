@@ -56,6 +56,12 @@ public class PizzaService {
         }
     }
 
+    //restituisce un PizzaDto partendo da una Pizza trovata per id. Se non la trova lancia PizzaNotFoundException
+    public PizzaDto getPizzaDtoById(Integer id) throws  PizzaNotFoundException{
+        Pizza pizza = getById(id);
+        return mapPizzaToPizzaDto(pizza);
+    }
+
     //crea una nuova pizza. Lancia un'eccezione se il campo nome è già presente a DB
     public Pizza create(Pizza pizza, BindingResult bindingResult) throws InvalidAttributeValueException{
         if(!isNameUnique(pizza.getName())) {
@@ -129,6 +135,18 @@ public class PizzaService {
         pizza.setIngredients(pizzaDto.getIngredients());
         pizza.setImage(multipartFileToByteArray(pizzaDto.getImage()));
         return pizza;
+    }
+
+    //trasforma una Pizza in un PizzaDto
+    private PizzaDto mapPizzaToPizzaDto(Pizza pizza){
+        PizzaDto result = new PizzaDto();
+        result.setId(pizza.getId());
+        result.setName(pizza.getName());
+        result.setDescription(pizza.getDescription());
+        result.setPrice(pizza.getPrice());
+        result.setImg(pizza.getImg());
+        result.setIngredients(pizza.getIngredients());
+        return result;
     }
 
     //converte un MultipartFile in un byte[]
