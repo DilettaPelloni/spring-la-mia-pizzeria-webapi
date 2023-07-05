@@ -77,6 +77,17 @@ public class PizzaService {
                     "Name "+pizza.getName()+" is already in use"
             ));
         }
+        if(pizza.getImage() == null) {
+            bindingResult.addError(new FieldError(
+                    "pizza",
+                    "image",
+                    pizza.getImage(),
+                    false,
+                    null,
+                    null,
+                    "Image must not be null"
+            ));
+        }
         if(bindingResult.hasErrors()) {
             throw new InvalidAttributeValueException();
         } else {
@@ -103,6 +114,17 @@ public class PizzaService {
                     null,
                     null,
                     "Name "+pizza.getName()+" is already in use"
+            ));
+        }
+        if(pizza.getImage() == null) {
+            bindingResult.addError(new FieldError(
+                    "pizza",
+                    "image",
+                    pizza.getImage(),
+                    false,
+                    null,
+                    null,
+                    "Image must not be null"
             ));
         }
         if(bindingResult.hasErrors()) {
