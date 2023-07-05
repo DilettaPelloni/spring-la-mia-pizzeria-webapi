@@ -1,6 +1,7 @@
 package org.lessons.springlamiapizzeriacrud.controller;
 
 import jakarta.validation.Valid;
+import org.lessons.springlamiapizzeriacrud.dto.PizzaDto;
 import org.lessons.springlamiapizzeriacrud.messages.AlertMessage;
 import org.lessons.springlamiapizzeriacrud.messages.AlertMessageType;
 import org.lessons.springlamiapizzeriacrud.model.Pizza;
@@ -59,7 +60,7 @@ public class PizzaController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("ingList", ingredientRepository.findAll());
-        model.addAttribute("pizza", new Pizza());
+        model.addAttribute("pizza", new PizzaDto());
         return "/pizza/editor";
     }
 

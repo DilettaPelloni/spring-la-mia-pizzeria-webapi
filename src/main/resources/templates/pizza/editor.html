@@ -17,6 +17,7 @@
                 id="pizza-form"
                 th:action="@{${isEdit ? '/pizzas/edit/' + pizza.id : '/pizzas/create'}}"
                 method="POST"
+                enctype="multipart/form-data"
                 th:object="${pizza}"
                 class="row"
             >
@@ -77,14 +78,14 @@
                                 </label>
                                 <input
                                         id="img"
-                                        type="text"
-                                        th:field="*{img}"
+                                        type="file"
+                                        th:field="*{image}"
                                         class="form-control"
                                         th:errorClass="is-invalid"
                                 >
-                                <div th:if="${#fields.hasErrors('img')}" class="invalid-feedback">
+                                <div th:if="${#fields.hasErrors('image')}" class="invalid-feedback">
                                     <ul>
-                                        <li th:each="err : ${#fields.errors('img')}">
+                                        <li th:each="err : ${#fields.errors('image')}">
                                             [[${err}]]
                                         </li>
                                     </ul>
@@ -92,7 +93,7 @@
                             </div>
                             <!--ANTEPRIMA IMMAGINE-->
                             <div th:if="${isEdit}" class="col-12 mt-2">
-                                <img th:src="@{*{img}}" height="200">
+<!--                                <img th:src="@{*{img}}" height="200">-->
                             </div>
                             <!--DESCRIZIONE-->
                             <div class="col-12 mt-2">
