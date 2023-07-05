@@ -7,15 +7,24 @@ public class ApiResponse<T> {
 
     private T content;
     private boolean success;
+    private String errorMessage;
     private List<?> errors = new ArrayList<>();
 
+    //caso OK
     public ApiResponse(T content) {
         this.content = content;
         this.success = true;
     }
+    //caso BAD REQUEST
     public ApiResponse(T content, List<?> errors) {
         this.content = content;
         this.errors = errors;
+        this.success = false;
+    }
+    //caso errore con solo messaggio
+    public ApiResponse(T content, String errorMessage) {
+        this.content = content;
+        this.errorMessage = errorMessage;
         this.success = false;
     }
 
@@ -41,5 +50,13 @@ public class ApiResponse<T> {
 
     public void setErrors(List<?> errors) {
         this.errors = errors;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.management.InvalidAttributeValueException;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,21 +30,21 @@ public class PizzaRestController {
 
     //INDEX -------------------------------------------
     @GetMapping
-    public List<Pizza> index(
+    public ResponseEntity<?> index(
         @RequestParam Optional<String> keyword
     ) {
-        return pizzaService.getAll(keyword);
+        return new ResponseEntity<>(new ApiResponse<>(pizzaService.getAll(keyword)), HttpStatus.OK);
     }
 
     //SHOW -------------------------------------------
     @GetMapping("/{id}")
-    public Pizza show(
+    public ResponseEntity<?> show(
         @PathVariable Integer id
     ) {
         try {
-            return pizzaService.getById(id);
+            return new ResponseEntity<>(new ApiResponse<>(pizzaService.getById(id)), HttpStatus.OK);
         } catch (PizzaNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            return new ResponseEntity<>(new ApiResponse<>(null, e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -54,39 +55,38 @@ public class PizzaRestController {
         BindingResult bindingResult
     ) {
         try {
-            return new ResponseEntity<>(new ApiResponse<>(pizzaService.create(pizza)), HttpStatus.CREATED);
-        } catch (NameNotUniqueException e) {
-            bindingResult.addError(new FieldError(
-                    "pizza",
-                    "name",
-                    pizza.getName(),
-                    false,
-                    null,
-                    null,
-                    "Name must be unique."
-            ));
-            System.out.println("sono qui");
-                return new ResponseEntity<>(new ApiResponse<>(null, bindingResult.getAllErrors()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ApiResponse<>(pizzaService.create(pizza, bindingResult)), HttpStatus.CREATED);
+        } catch (InvalidAttributeValueException e) {
+            return new ResponseEntity<>(new ApiResponse<>(null, bindingResult.getAllErrors()), HttpStatus.BAD_REQUEST);
         }
     }
 
     //UPDATE -------------------------------------------
     @PutMapping("/{id}")
-    public Pizza update(
+    public ResponseEntity<?> update(
         @PathVariable Integer id,
-        @Valid @RequestBody Pizza pizza
+        @Valid @RequestBody Pizza pizza,
+        BindingResult bindingResult
     ) {
-        return pizzaService.update(id, pizza);
+        try {
+            return new ResponseEntity<>(new ApiResponse<>(pizzaService.update(id, pizza, bindingResult)), HttpStatus.OK);
+        } catch (PizzaNotFoundException e ) {
+            return new ResponseEntity<>(new ApiResponse<>(null, e.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (InvalidAttributeValueException e) {
+            return new ResponseEntity<>(new ApiResponse<>(null, bindingResult.getAllErrors()), HttpStatus.BAD_REQUEST);
+        }
     }
 
     //DELETE -------------------------------------------
     @DeleteMapping("/{id}")
-    public void delete(
+    public ResponseEntity<?> delete(
         @PathVariable Integer id
     ) {
-        pizzaService.deleteById(id);
+        try {
+            pizzaService.deleteById(id);
+            return new ResponseEntity<>(new ApiResponse<>("Pizza with id "+id+" deleted"), HttpStatus.OK);
+        } catch (PizzaNotFoundException e) {
+            return new ResponseEntity<>(new ApiResponse<>(null, e.getMessage()), HttpStatus.NOT_FOUND);
+        }
     }
-
-
-
 }
