@@ -21,7 +21,18 @@
                         <div class="row">
                             <!--IMMAGINE-->
                             <div class="col-12 mb-4">
-                                <img th:src="*{img}" th:alt="*{name}" class="img-fluid">
+                                <img
+                                    th:if="${pizza.img != null}"
+                                    th:src="*{img}"
+                                    th:alt="*{name}"
+                                    class="img-fluid"
+                                >
+                                <img
+                                    th:unless="${pizza.img != null}"
+                                    th:src="@{|/files/photo/*{id}|}"
+                                    th:alt="*{name}"
+                                    class="img-fluid"
+                                >
                             </div>
                             <!--BOTTONI-->
                             <div class="col-12 d-flex gap-2 align-items-start">
