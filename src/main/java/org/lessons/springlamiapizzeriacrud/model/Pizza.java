@@ -29,7 +29,6 @@ public class Pizza {
     @Size(min=3, max=1600, message = "Description must have min 3 and max 1600 characters")
     private String description;
 
-    @NotBlank(message = "Image must not be null or blank")
     private String img;
 
     @Lob
@@ -92,5 +91,11 @@ public class Pizza {
     }
     public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
+    }
+    public byte[] getImage() {
+        return image;
+    }
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

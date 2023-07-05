@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import org.lessons.springlamiapizzeriacrud.model.Ingredient;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +24,7 @@ public class PizzaDto {
     @Size(min=3, max=1600, message = "Description must have min 3 and max 1600 characters")
     private String description;
     //IMAGE
-    @Lob
-    @Column(length = 16777215)
-    private byte[] image;
+    private MultipartFile image;
     //PRICE
     @PositiveOrZero(message = "Price must have a positive value")
     @NotNull(message = "Price must not be null")
@@ -50,10 +50,10 @@ public class PizzaDto {
     public void setDescription(String description) {
         this.description = description;
     }
-    public byte[] getImage() {
+    public MultipartFile getImage() {
         return image;
     }
-    public void setImage(byte[] image) {
+    public void setImage(MultipartFile image) {
         this.image = image;
     }
     public BigDecimal getPrice() {

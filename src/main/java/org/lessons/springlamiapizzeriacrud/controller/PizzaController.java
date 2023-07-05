@@ -7,6 +7,7 @@ import org.lessons.springlamiapizzeriacrud.messages.AlertMessageType;
 import org.lessons.springlamiapizzeriacrud.model.Pizza;
 import org.lessons.springlamiapizzeriacrud.repository.IngredientRepository;
 import org.lessons.springlamiapizzeriacrud.repository.PizzaRepository;
+import org.lessons.springlamiapizzeriacrud.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.management.InvalidAttributeValueException;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +26,8 @@ import java.util.Optional;
 @RequestMapping("/pizzas")
 public class PizzaController {
 
+    @Autowired
+    private PizzaService pizzaService;
     @Autowired
     private PizzaRepository pizzaRepository;
     @Autowired
@@ -66,29 +70,19 @@ public class PizzaController {
 
     @PostMapping("/create")
     public String store(
-        @Valid @ModelAttribute("pizza") Pizza formPizza,
+        @Valid @ModelAttribute("pizza") PizzaDto formPizza,
         BindingResult bindingResult,
         RedirectAttributes redirectAttributes,
         Model model
     ) {
-        if(!isNameUnique(formPizza.getName())) { //se il nome NON è univoco
-            bindingResult.addError(new FieldError(
-                    "pizza", //il nome dell'oggetto a cui si riferisce l'errore
-                    "name", //l'attributo dell'oggetto a cui si riferisce l'errore
-                    formPizza.getName(), //il valore sbagliato
-                    false, //true se è un binding failure, false se è un validation failure
-                    null, //array di codici dell'errore
-                    null, //array di argomenti dell'errore
-                    "Name must be unique." //messaggio d'errore
-            ));
-        }
-        if(bindingResult.hasErrors()) {
+        try {
+            Pizza pizza = pizzaService.create(formPizza, bindingResult);
+            redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Pizza " + formPizza.getName() + " created successfully!"));
+            return "redirect:/pizzas/" + pizza.getId();
+        } catch (InvalidAttributeValueException e) {
             model.addAttribute("ingList", ingredientRepository.findAll());
             return "/pizza/editor";
         }
-        pizzaRepository.save(formPizza);
-        redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Pizza " + formPizza.getName() + " created successfully!"));
-        return "redirect:/pizzas/" + formPizza.getId();
     }
 
     //UPDATE --------------------------------------------------------------------------------------------------------------

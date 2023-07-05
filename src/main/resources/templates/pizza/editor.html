@@ -73,14 +73,14 @@
                             </div>
                             <!--IMMAGINE-->
                             <div class="col-12 mt-2">
-                                <label for="img" class="form-label">
+                                <label for="image" class="form-label">
                                     Image*
                                 </label>
                                 <input
-                                        id="img"
+                                        id="image"
                                         type="file"
-                                        th:field="*{image}"
                                         class="form-control"
+                                        th:field="*{image}"
                                         th:errorClass="is-invalid"
                                 >
                                 <div th:if="${#fields.hasErrors('image')}" class="invalid-feedback">

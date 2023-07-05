@@ -1,5 +1,6 @@
 package org.lessons.springlamiapizzeriacrud.service;
 
+import org.lessons.springlamiapizzeriacrud.dto.PizzaDto;
 import org.lessons.springlamiapizzeriacrud.exceptions.NameNotUniqueException;
 import org.lessons.springlamiapizzeriacrud.exceptions.PizzaNotFoundException;
 import org.lessons.springlamiapizzeriacrud.model.Pizza;
@@ -11,9 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.management.InvalidAttributeValueException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,6 +76,12 @@ public class PizzaService {
         }
     }
 
+    //crea una nuova pizza partendo da un PizzaDto
+    public Pizza create(PizzaDto pizzaDto, BindingResult bindingResult) throws InvalidAttributeValueException{
+        Pizza pizza = mapPizzaDtoToPizza(pizzaDto);
+        return create(pizza, bindingResult);
+    }
+
     //modifica una pizza esistente
     public Pizza update(Integer id, Pizza pizza, BindingResult bindingResult) throws PizzaNotFoundException, InvalidAttributeValueException{
         Pizza oldPizza = getById(id);
@@ -102,10 +111,37 @@ public class PizzaService {
         pizzaRepository.delete(pizza);
     }
 
+    //UTILITY -------------------------------------------------------------------------------------
+
     //verifica se i nome di una pizza esiste già a DB
     private boolean isNameUnique(String name){
         Optional<Pizza> result = pizzaRepository.findByName(name);
         return result.isEmpty();
+    }
+
+    //trasforma un PizzaDTO in una Pizza
+    private Pizza mapPizzaDtoToPizza(PizzaDto pizzaDto) throws RuntimeException{
+        Pizza pizza = new Pizza();
+        pizza.setId(pizzaDto.getId());
+        pizza.setName(pizzaDto.getName());
+        pizza.setDescription(pizzaDto.getDescription());
+        pizza.setPrice(pizzaDto.getPrice());
+        pizza.setIngredients(pizzaDto.getIngredients());
+        pizza.setImage(multipartFileToByteArray(pizzaDto.getImage()));
+        return pizza;
+    }
+
+    //converte un MultipartFile in un byte[]
+    private byte[] multipartFileToByteArray(MultipartFile mpf) throws RuntimeException{
+        byte[] bytes = null;
+        if(mpf != null && !mpf.isEmpty()) {
+            try {
+                bytes = mpf.getBytes();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return bytes;
     }
 
 }
