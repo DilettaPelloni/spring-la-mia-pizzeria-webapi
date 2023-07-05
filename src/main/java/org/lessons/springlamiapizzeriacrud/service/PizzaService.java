@@ -120,7 +120,7 @@ public class PizzaService {
     }
 
     //trasforma un PizzaDTO in una Pizza
-    private Pizza mapPizzaDtoToPizza(PizzaDto pizzaDto) throws RuntimeException{
+    private Pizza mapPizzaDtoToPizza(PizzaDto pizzaDto){
         Pizza pizza = new Pizza();
         pizza.setId(pizzaDto.getId());
         pizza.setName(pizzaDto.getName());
@@ -132,13 +132,13 @@ public class PizzaService {
     }
 
     //converte un MultipartFile in un byte[]
-    private byte[] multipartFileToByteArray(MultipartFile mpf) throws RuntimeException{
+    private byte[] multipartFileToByteArray(MultipartFile mpf){
         byte[] bytes = null;
         if(mpf != null && !mpf.isEmpty()) {
             try {
                 bytes = mpf.getBytes();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
         return bytes;
