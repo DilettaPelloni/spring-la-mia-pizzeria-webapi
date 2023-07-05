@@ -26,6 +26,7 @@ public class PizzaService {
     @Autowired
     private PizzaRepository pizzaRepository;
 
+    //READ ---------------------------------------------------------------------------------
     //restituisce la lista delle pizze, intera o filtrata
     public List<Pizza> getAll(Optional<String> keyword) {
         if(keyword.isEmpty()) {
@@ -34,7 +35,7 @@ public class PizzaService {
             return pizzaRepository.findByNameContainingIgnoreCase(keyword.get());
         }
     }
-
+    //restituisce la lista delle pizze paginata, intera o filtrata
     public Page<Pizza> getPage(
         Pageable pageable,
         Optional<String> keyword
@@ -62,6 +63,7 @@ public class PizzaService {
         return mapPizzaToPizzaDto(pizza);
     }
 
+    //CREATE ---------------------------------------------------------------------------------
     //crea una nuova pizza. Lancia un'eccezione se il campo nome è già presente a DB
     public Pizza create(Pizza pizza, BindingResult bindingResult) throws InvalidAttributeValueException{
         if(!isNameUnique(pizza.getName())) {
@@ -88,6 +90,7 @@ public class PizzaService {
         return create(pizza, bindingResult);
     }
 
+    //UPDATE ---------------------------------------------------------------------------------
     //modifica una pizza esistente
     public Pizza update(Integer id, Pizza pizza, BindingResult bindingResult) throws PizzaNotFoundException, InvalidAttributeValueException{
         Pizza oldPizza = getById(id);
@@ -101,16 +104,23 @@ public class PizzaService {
                     null,
                     "Name "+pizza.getName()+" is already in use"
             ));
-
         }
         if(bindingResult.hasErrors()) {
             throw new InvalidAttributeValueException();
         } else {
             pizza.setId(id);
+            pizza.setImg(null);
             return pizzaRepository.save(pizza);
         }
     }
 
+    //modifica una pizza esistente partendo da un PizzaDto
+    public Pizza update(Integer id, PizzaDto pizzaDto, BindingResult bindingResult) throws PizzaNotFoundException, InvalidAttributeValueException{
+        Pizza pizza = mapPizzaDtoToPizza(pizzaDto);
+        return update(id, pizza, bindingResult);
+    }
+
+    //DELETE ---------------------------------------------------------------------------------
     //cancella una pizza esistente
     public void deleteById(Integer id) throws PizzaNotFoundException{
         Pizza pizza = getById(id);
@@ -128,7 +138,6 @@ public class PizzaService {
     //trasforma un PizzaDTO in una Pizza
     private Pizza mapPizzaDtoToPizza(PizzaDto pizzaDto){
         Pizza pizza = new Pizza();
-        pizza.setId(pizzaDto.getId());
         pizza.setName(pizzaDto.getName());
         pizza.setDescription(pizzaDto.getDescription());
         pizza.setPrice(pizzaDto.getPrice());

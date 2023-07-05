@@ -24,6 +24,7 @@ public class PizzaDto {
     @Size(min=3, max=1600, message = "Description must have min 3 and max 1600 characters")
     private String description;
     //IMAGE
+    @NotNull(message = "Image must not be null")
     private MultipartFile image;
     private String img;
     //PRICE

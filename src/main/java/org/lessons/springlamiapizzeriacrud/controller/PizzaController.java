@@ -105,31 +105,21 @@ public class PizzaController {
     @PostMapping("/edit/{id}")
     public String update(
         @PathVariable("id") Integer id,
-        @Valid @ModelAttribute("pizza") Pizza formPizza,
+        @Valid @ModelAttribute("pizza") PizzaDto formPizza,
         BindingResult bindingResult,
         RedirectAttributes redirectAttributes,
         Model model
     ) {
-        Pizza oldPizza = getPizzaById(id); //vado a prendere la pizza prima della modifica dal DB
-        if(!oldPizza.getName().equals(formPizza.getName()) && !isNameUnique(formPizza.getName())) { //se il nome è stato modificato E NON è univoco
-            bindingResult.addError(new FieldError( //creo un nuovo errore
-                    "pizza",
-                    "name",
-                    formPizza.getName(),
-                    false,
-                    null,
-                    null,
-                    "Name must be unique."
-            ));
-        }
-        if(bindingResult.hasErrors()) { //se ho trovato errori rimango sull'editor
+        try {
+            Pizza pizza = pizzaService.update(id, formPizza, bindingResult);
+            redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Pizza " + formPizza.getName() + " updated successfully!"));
+            return "redirect:/pizzas/" + pizza.getId();
+        } catch (PizzaNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza with id "+id+" not found");
+        } catch (InvalidAttributeValueException e) {
             model.addAttribute("ingList", ingredientRepository.findAll());
             return "/pizza/editor";
         }
-        formPizza.setId(oldPizza.getId()); //imposto l'id della pizza aggiornata uguale all'id originale
-        pizzaRepository.save(formPizza);
-        redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Pizza " + formPizza.getName() + " updated successfully!"));
-        return "redirect:/pizzas/" + formPizza.getId();
     }
 
     //DELETE --------------------------------------------------------------------------------------------------------------
