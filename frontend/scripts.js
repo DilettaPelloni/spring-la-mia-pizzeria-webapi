@@ -4,7 +4,8 @@ createApp({
     data() {
         return {
             url: "http://localhost:8080/api/v1/pizzas",
-            pizzas: null
+            pizzas: [],
+            keyword:"",
         }//return
     },//data
     methods: {
@@ -18,7 +19,7 @@ createApp({
             }
         }
     },//methods
-    mounted() {
+    created() {
         this.getPizzas();
     }
 }).mount('#app');
