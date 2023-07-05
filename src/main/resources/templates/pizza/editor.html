@@ -93,7 +93,8 @@
                             </div>
                             <!--ANTEPRIMA IMMAGINE-->
                             <div th:if="${isEdit}" class="col-12 mt-2">
-<!--                                <img th:src="@{*{img}}" height="200">-->
+                                <img th:if="${pizza.img != null}" th:src="@{*{img}}" height="200">
+                                <img th:unless="${pizza.img != null}" th:src="@{|/files/photo/*{id}|}" height="200">
                             </div>
                             <!--DESCRIZIONE-->
                             <div class="col-12 mt-2">
