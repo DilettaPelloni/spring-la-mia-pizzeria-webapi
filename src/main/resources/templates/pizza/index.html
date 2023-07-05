@@ -56,7 +56,10 @@
                             <td th:text="${pizza.name}"></td>
                             <td th:text="${pizza.description}" class="text-break"></td>
                             <td th:text="${#numbers.formatCurrency(pizza.price)}"></td>
-                            <td><img th:src="${pizza.img}" height="30" th:alt="${pizza.name}"></td>
+                            <td>
+                                <img th:if="${pizza.img != null}" th:src="${pizza.img}" height="30" th:alt="${pizza.name}">
+                                <img th:unless="${pizza.img != null}" th:src="@{|/files/photo/${pizza.id}|}" height="30" th:alt="${pizza.name}">
+                            </td>
                             <td class="d-flex gap-2">
                                 <a th:href="@{|/pizzas/${pizza.id}|}" class="btn btn-outline-primary">
                                     <i class="fa-solid fa-pizza-slice"></i>
