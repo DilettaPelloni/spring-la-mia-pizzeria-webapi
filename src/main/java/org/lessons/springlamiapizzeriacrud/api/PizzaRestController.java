@@ -35,8 +35,8 @@ public class PizzaRestController {
         @RequestParam Optional<String> keyword,
         Pageable pageable
     ) {
-//        return new ResponseEntity<>(new ApiResponse<>(pizzaService.getAll(keyword)), HttpStatus.OK);
-        return new ResponseEntity<>(new ApiResponse<>(pizzaService.getPage(pageable, keyword)), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse<>(pizzaService.getAll(keyword)), HttpStatus.OK);
+//        return new ResponseEntity<>(new ApiResponse<>(pizzaService.getPage(pageable, keyword)), HttpStatus.OK);
     }
 
     //SHOW -------------------------------------------
