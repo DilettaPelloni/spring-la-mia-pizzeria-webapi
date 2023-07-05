@@ -5,6 +5,8 @@ import org.lessons.springlamiapizzeriacrud.exceptions.PizzaNotFoundException;
 import org.lessons.springlamiapizzeriacrud.model.Pizza;
 import org.lessons.springlamiapizzeriacrud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -27,6 +29,17 @@ public class PizzaService {
             return pizzaRepository.findAll();
         } else {
             return pizzaRepository.findByNameContainingIgnoreCase(keyword.get());
+        }
+    }
+
+    public Page<Pizza> getPage(
+        Pageable pageable,
+        Optional<String> keyword
+    ) {
+        if(keyword.isEmpty()) {
+            return pizzaRepository.findAll(pageable);
+        } else {
+            return pizzaRepository.findByNameContainingIgnoreCase(keyword.get(), pageable);
         }
     }
 

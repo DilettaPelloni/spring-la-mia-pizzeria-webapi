@@ -9,6 +9,7 @@ import org.lessons.springlamiapizzeriacrud.repository.PizzaRepository;
 import org.lessons.springlamiapizzeriacrud.responses.ApiResponse;
 import org.lessons.springlamiapizzeriacrud.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -31,20 +32,22 @@ public class PizzaRestController {
     //INDEX -------------------------------------------
     @GetMapping
     public ResponseEntity<?> index(
-        @RequestParam Optional<String> keyword
+        @RequestParam Optional<String> keyword,
+        Pageable pageable
     ) {
-        return new ResponseEntity<>(new ApiResponse<>(pizzaService.getAll(keyword)), HttpStatus.OK);
+//        return new ResponseEntity<>(new ApiResponse<>(pizzaService.getAll(keyword)), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse<>(pizzaService.getPage(pageable, keyword)), HttpStatus.OK);
     }
 
     //SHOW -------------------------------------------
     @GetMapping("/{id}")
-    public ResponseEntity<?> show(
+    public ResponseEntity<ApiResponse> show(
         @PathVariable Integer id
     ) {
         try {
-            return new ResponseEntity<>(new ApiResponse<>(pizzaService.getById(id)), HttpStatus.OK);
+            return new ResponseEntity<ApiResponse>(new ApiResponse<>(pizzaService.getById(id)), HttpStatus.OK);
         } catch (PizzaNotFoundException e) {
-            return new ResponseEntity<>(new ApiResponse<>(null, e.getMessage()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<ApiResponse>(new ApiResponse<>(null, e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -63,7 +66,7 @@ public class PizzaRestController {
 
     //UPDATE -------------------------------------------
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(
+    public ResponseEntity<ApiResponse> update(
         @PathVariable Integer id,
         @Valid @RequestBody Pizza pizza,
         BindingResult bindingResult
@@ -79,7 +82,7 @@ public class PizzaRestController {
 
     //DELETE -------------------------------------------
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(
+    public ResponseEntity<ApiResponse> delete(
         @PathVariable Integer id
     ) {
         try {
